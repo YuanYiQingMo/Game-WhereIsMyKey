@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerGroundState : PlayerState
+public class PlayerAirState : PlayerState
 {
-    protected int Xinput;
+    protected bool IsJump;
     
-    public PlayerGroundState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerAirState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 
@@ -29,16 +29,11 @@ public class PlayerGroundState : PlayerState
     {
         base.LogicUpdate();
 
-        Xinput = player.InputHandler.NormalInputX;
-        CheckJump();
+        IsJump = player.InputHandler.IsJump;
     }
 
     public override void PhysicUpdate()
     {
         base.PhysicUpdate();
-    }
-
-    private void CheckJump(){
-
     }
 }

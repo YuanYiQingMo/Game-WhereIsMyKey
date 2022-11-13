@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerGroundState : PlayerState
+public class PlayerJumpDownState : PlayerAirState
 {
-    protected int Xinput;
-    
-    public PlayerGroundState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+
+    public PlayerJumpDownState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 
@@ -18,8 +17,9 @@ public class PlayerGroundState : PlayerState
     public override void Enter()
     {
         base.Enter();
-    }
 
+        player.SetVelocityX(0.0f);
+    }
     public override void Exit()
     {
         base.Exit();
@@ -28,17 +28,10 @@ public class PlayerGroundState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
-        Xinput = player.InputHandler.NormalInputX;
-        CheckJump();
     }
 
     public override void PhysicUpdate()
     {
         base.PhysicUpdate();
-    }
-
-    private void CheckJump(){
-
     }
 }

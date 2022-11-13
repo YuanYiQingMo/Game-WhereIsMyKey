@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
     public PlayerStateMachine stateMachine {get; private set;}
     public PlayerIdleState IdleState {get;private set;}
     public PlayerMoveState MoveState {get;private set;}
+    public PlayerJumpUpState JumpUpState {get;private set;}
+    public PlayerJumpStayState JumpStayState {get;private set;}
+    public PlayerJumpDownState JumpDownState {get;private set;}
     [SerializeField]
     private PlayerData playerData;
 #endregion
@@ -29,6 +32,9 @@ public class Player : MonoBehaviour
         stateMachine = new PlayerStateMachine();
         IdleState = new PlayerIdleState(this, stateMachine, playerData, "idle");
         MoveState = new PlayerMoveState(this, stateMachine, playerData, "move");
+        JumpUpState = new PlayerJumpUpState(this, stateMachine, playerData, "jumpUp");
+        JumpDownState = new PlayerJumpDownState(this, stateMachine, playerData, "jumpDown");
+        JumpStayState = new PlayerJumpStayState(this, stateMachine, playerData, "jumpStay");
     }
     private void Start() {
         Anim = GetComponent<Animator>();

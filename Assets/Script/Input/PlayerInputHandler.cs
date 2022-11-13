@@ -5,9 +5,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    public Vector2 RawMovementInput {get; private set;}
-    public int NormalInputX{get; private set;}
+    //Move
+    public Vector2 RawMovementInput { get; private set; }
+    public int NormalInputX { get; private set; }
     public int NormalInputY { get; private set; }
+    //Jump
+    public bool IsJump { get; private set; }
 
     public void OnMoveInput(InputAction.CallbackContext context)
     {
@@ -18,13 +21,17 @@ public class PlayerInputHandler : MonoBehaviour
     }
     public void OnJumpInput(InputAction.CallbackContext context)
     {
-        if(context.started){
-            //按钮按下
+        if (context.started)
+        {
+            IsJump = true;
         }
-        if(context.performed){
+        if (context.performed)
+        {
             //正在按按钮
         }
-        if(context.canceled){
+        if (context.canceled)
+        {
+            IsJump = false;
             //按钮被释放
         }
     }
