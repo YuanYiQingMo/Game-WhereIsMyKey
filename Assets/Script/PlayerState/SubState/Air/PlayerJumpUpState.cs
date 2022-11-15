@@ -19,7 +19,7 @@ public class PlayerJumpUpState : PlayerAirState
     {
         base.Enter();
 
-        player.SetVelocityY(0.0f);
+        player.SetVelocityY(playerData.jumpVelocity);
     }
     public override void Exit()
     {
@@ -29,14 +29,17 @@ public class PlayerJumpUpState : PlayerAirState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if(IsJump == true){
-            stateMachine.ChangeState(player.JumpUpState);
-
+        if(player.CurrentVelocity.y == 0.0f || IsJump == false){
+            stateMachine.ChangeState(player.JumpStayState);
         }
     }
 
     public override void PhysicUpdate()
     {
         base.PhysicUpdate();
+        if(IsJump == true){
+            player.SetVelocityY(playerData.jumpVelocity);
+            // player.SetVelocityY(playerData.jumpUpModify * player.CurrentVelocity.y);
+        }
     }
 }

@@ -39,6 +39,8 @@ public class PlayerGroundState : PlayerState
     }
 
     private void CheckJump(){
-
+        if(player.InputHandler.IsJump == true){
+            stateMachine.ChangeState(player.JumpState);
+        }
     }
 }

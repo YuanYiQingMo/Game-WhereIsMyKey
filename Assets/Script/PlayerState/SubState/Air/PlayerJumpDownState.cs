@@ -17,8 +17,6 @@ public class PlayerJumpDownState : PlayerAirState
     public override void Enter()
     {
         base.Enter();
-
-        player.SetVelocityX(0.0f);
     }
     public override void Exit()
     {
@@ -28,6 +26,9 @@ public class PlayerJumpDownState : PlayerAirState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        if(Mathf.Abs(player.CurrentVelocity.y) <= 0.01f){
+            stateMachine.ChangeState(player.IdleState);
+        }
     }
 
     public override void PhysicUpdate()

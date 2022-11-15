@@ -25,14 +25,8 @@ public class PlayerInputHandler : MonoBehaviour
         {
             IsJump = true;
         }
-        if (context.performed)
-        {
-            //正在按按钮
-        }
-        if (context.canceled)
-        {
-            IsJump = false;
-            //按钮被释放
-        }
+    }
+    public void HasJump(){
+        IsJump = false;
     }
 }

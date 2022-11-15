@@ -28,7 +28,6 @@ public class PlayerAirState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
         IsJump = player.InputHandler.IsJump;
     }
 
