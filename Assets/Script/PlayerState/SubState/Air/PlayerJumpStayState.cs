@@ -30,7 +30,7 @@ public class PlayerJumpStayState : PlayerAirState
         base.LogicUpdate();
         if (player.CurrentVelocity.y <= 0.0f)
         {
-            stateMachine.ChangeState(player.JumpDownState);
+            // stateMachine.ChangeState(player.JumpDownState);
         }
     }
 

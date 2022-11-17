@@ -9,9 +9,7 @@ public class Player : MonoBehaviour
     public PlayerIdleState IdleState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }
     public PlayerJumpState JumpState { get; private set; }
-    public PlayerJumpStayState JumpStayState { get; private set; }
-    public PlayerJumpDownState JumpDownState { get; private set; }
-    public PlayerLandState LandState {get;private set;}
+    public PlayerLandState LandState { get; private set; }
     [SerializeField]
     private PlayerData playerData;
     #endregion
@@ -20,6 +18,9 @@ public class Player : MonoBehaviour
     public Animator Anim { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
     public Rigidbody2D rb { get; private set; }
+
+    [SerializeField]
+    private GameObject GroundCheck;
     #endregion
 
     #region Move Variables
@@ -37,8 +38,6 @@ public class Player : MonoBehaviour
         IdleState = new PlayerIdleState(this, stateMachine, playerData, "idle");
         MoveState = new PlayerMoveState(this, stateMachine, playerData, "move");
         JumpState = new PlayerJumpState(this, stateMachine, playerData, "jump");
-        JumpDownState = new PlayerJumpDownState(this, stateMachine, playerData, "jumpDown");
-        JumpStayState = new PlayerJumpStayState(this, stateMachine, playerData, "jumpStay");
         LandState = new PlayerLandState(this, stateMachine, playerData, "land");
     }
 
@@ -57,6 +56,8 @@ public class Player : MonoBehaviour
     {
         stateMachine.currentState.LogicUpdate();
         CurrentVelocity = rb.velocity;
+        Anim.SetFloat("ySpeed",CurrentVelocity.y);
+
     }
 
     private void FixedUpdate()
@@ -102,7 +103,25 @@ public class Player : MonoBehaviour
 
     public bool CheckCanJump()
     {
-        return true;
+        InputHandler.HasJump();
+        if(CheckInGround()){
+            return true;
+        }
+        return false;
+    }
+
+    public bool CheckInGround()
+    {
+        return Physics2D.OverlapCircle(GroundCheck.transform.position,playerData.GroundCheckRadius,playerData.WhatIsGround);
+    }
+
+    #endregion
+
+    #region Gizmo
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(GroundCheck.transform.position,playerData.GroundCheckRadius);
     }
 
     #endregion

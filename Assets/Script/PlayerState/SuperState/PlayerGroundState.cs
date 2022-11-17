@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerGroundState : PlayerState
 {
     protected int Xinput;
-    
+
     public PlayerGroundState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -29,8 +29,8 @@ public class PlayerGroundState : PlayerState
     {
         base.LogicUpdate();
 
+        CheckIfShouldJump();
         Xinput = player.InputHandler.NormalInputX;
-        CheckJump();
     }
 
     public override void PhysicUpdate()
@@ -38,8 +38,10 @@ public class PlayerGroundState : PlayerState
         base.PhysicUpdate();
     }
 
-    private void CheckJump(){
-        if(player.InputHandler.IsJump == true){
+    private void CheckIfShouldJump()
+    {
+        if (player.InputHandler.IsJump && player.CheckCanJump())
+        {
             stateMachine.ChangeState(player.JumpState);
         }
     }

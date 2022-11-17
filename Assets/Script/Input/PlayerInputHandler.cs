@@ -12,6 +12,9 @@ public class PlayerInputHandler : MonoBehaviour
     //Jump
     public bool IsJump { get; private set; }
 
+    //InputTimer
+    public float InputTimerSet = 0.5f;
+    public float InputTimer;
     public void OnMoveInput(InputAction.CallbackContext context)
     {
         RawMovementInput = context.ReadValue<Vector2>();

@@ -16,7 +16,7 @@ public class PlayerLandState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
-        stateMachine.ChangeState(player.IdleState);
+        // stateMachine.ChangeState(player.IdleState);
     }
 
     public override bool Equals(object obj)
