@@ -7,6 +7,7 @@ public class PlayerJumpState : PlayerAbilityState
     public PlayerJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
+    private float YVelocity;
 
     public override void DoChecks()
     {
@@ -16,6 +17,7 @@ public class PlayerJumpState : PlayerAbilityState
     public override void Enter()
     {
         base.Enter();
+        YVelocity = playerData.jumpVelocity;
         player.SetVelocityY(playerData.jumpVelocity);
     }
 
@@ -27,9 +29,11 @@ public class PlayerJumpState : PlayerAbilityState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        
-        if(player.CheckInGround() && player.CurrentVelocity.y <= 0){
-            stateMachine.ChangeState(player.LandState);
+        if(!player.InputHandler.IsJumping){
+            player.stateMachine.ChangeState(player.InAirState);
+        }else if(player.InputHandler.IsJumping && player.CurrentVelocity.y >= 0){
+            YVelocity *= playerData.jumpUpModify;
+            player.SetVelocityY(YVelocity);
         }
     }
 

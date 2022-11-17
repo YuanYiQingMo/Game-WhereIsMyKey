@@ -26,20 +26,19 @@ public class PlayerMoveState : PlayerGroundState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        
-
         player.CheckIfShouldFlip(Xinput);
-
-        player.SetVelocityX(playerData.movementVelocity * Xinput);
-        if(Xinput == 0){
-            stateMachine.ChangeState(player.IdleState);
-        }
-
-
+        Move();
     }
 
     public override void PhysicUpdate()
     {
         base.PhysicUpdate();
+    }
+
+    private void Move(){
+        player.SetVelocityX(playerData.movementVelocity * Xinput);
+        if(Xinput == 0){
+            stateMachine.ChangeState(player.IdleState);
+        }
     }
 }

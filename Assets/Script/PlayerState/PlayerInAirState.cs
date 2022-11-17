@@ -26,6 +26,15 @@ public class PlayerInAirState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        player.Anim.SetFloat("ySpeed", player.CurrentVelocity.y);
+        if(player.CheckInGround() && (player.CurrentVelocity.y <= 0)){
+            if(player.CurrentVelocity.x != 0){
+                player.stateMachine.ChangeState(player.MoveState);
+            }else{
+                player.stateMachine.ChangeState(player.IdleState);
+
+            }
+        }
     }
 
     public override void PhysicUpdate()

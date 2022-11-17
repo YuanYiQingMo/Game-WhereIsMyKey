@@ -29,8 +29,15 @@ public class PlayerGroundState : PlayerState
     {
         base.LogicUpdate();
 
-        CheckIfShouldJump();
         Xinput = player.InputHandler.NormalInputX;
+        if (!player.CheckInGround())
+        {
+            stateMachine.ChangeState(player.InAirState);
+        }
+        else
+        {
+            CheckIfShouldJump();
+        }
     }
 
     public override void PhysicUpdate()
@@ -40,7 +47,7 @@ public class PlayerGroundState : PlayerState
 
     private void CheckIfShouldJump()
     {
-        if (player.InputHandler.IsJump && player.CheckCanJump())
+        if (player.InputHandler.IsJumping && player.CheckInGround())
         {
             stateMachine.ChangeState(player.JumpState);
         }

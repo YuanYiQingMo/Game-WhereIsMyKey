@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public PlayerMoveState MoveState { get; private set; }
     public PlayerJumpState JumpState { get; private set; }
     public PlayerLandState LandState { get; private set; }
+    public PlayerInAirState InAirState { get; private set; }
     [SerializeField]
     private PlayerData playerData;
     #endregion
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
         MoveState = new PlayerMoveState(this, stateMachine, playerData, "move");
         JumpState = new PlayerJumpState(this, stateMachine, playerData, "jump");
         LandState = new PlayerLandState(this, stateMachine, playerData, "land");
+        InAirState = new PlayerInAirState(this, stateMachine, playerData, "inAir");
     }
 
     private void Start()
@@ -56,7 +58,6 @@ public class Player : MonoBehaviour
     {
         stateMachine.currentState.LogicUpdate();
         CurrentVelocity = rb.velocity;
-        Anim.SetFloat("ySpeed",CurrentVelocity.y);
 
     }
 
@@ -78,7 +79,7 @@ public class Player : MonoBehaviour
 
     public void SetVelocityY(float velocity)
     {
-        workspace.Set(CurrentVelocity.x, velocity);
+        workspace.Set(CurrentVelocity.x,velocity);
         rb.velocity = workspace;
         CurrentVelocity = workspace;
     }
@@ -101,18 +102,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    public bool CheckCanJump()
-    {
-        InputHandler.HasJump();
-        if(CheckInGround()){
-            return true;
-        }
-        return false;
-    }
-
     public bool CheckInGround()
     {
-        return Physics2D.OverlapCircle(GroundCheck.transform.position,playerData.GroundCheckRadius,playerData.WhatIsGround);
+        return Physics2D.OverlapBox(GroundCheck.transform.position,playerData.GroundCheckRadius,0.0f,playerData.WhatIsGround);
     }
 
     #endregion
@@ -121,7 +113,7 @@ public class Player : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(GroundCheck.transform.position,playerData.GroundCheckRadius);
+        Gizmos.DrawWireCube(GroundCheck.transform.position, playerData.GroundCheckRadius);
     }
 
     #endregion

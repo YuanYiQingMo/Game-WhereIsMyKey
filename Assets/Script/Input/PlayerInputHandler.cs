@@ -10,26 +10,41 @@ public class PlayerInputHandler : MonoBehaviour
     public int NormalInputX { get; private set; }
     public int NormalInputY { get; private set; }
     //Jump
-    public bool IsJump { get; private set; }
+    public bool IsJumping { get; private set; }
 
     //InputTimer
     public float InputTimerSet = 0.5f;
-    public float InputTimer;
+    private float InputTimer;
     public void OnMoveInput(InputAction.CallbackContext context)
     {
         RawMovementInput = context.ReadValue<Vector2>();
 
         NormalInputX = (int)(RawMovementInput * Vector2.right).normalized.x;
         NormalInputY = (int)(RawMovementInput * Vector2.up).normalized.y;
+
     }
     public void OnJumpInput(InputAction.CallbackContext context)
     {
+        InputTimer = InputTimerSet;
         if (context.started)
         {
-            IsJump = true;
+            IsJumping = true;
+        }
+        if (context.canceled)
+        {
+            IsJumping = false;
         }
     }
-    public void HasJump(){
-        IsJump = false;
+
+    private void Update()
+    {
+        if (InputTimer >= 0)
+        {
+            InputTimer -= Time.deltaTime;
+        }
+        else
+        {
+            IsJumping = false;
+        }
     }
 }
