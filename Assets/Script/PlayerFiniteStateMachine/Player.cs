@@ -90,6 +90,10 @@ public class Player : MonoBehaviour
         transform.Rotate(0.0f, 180.0f, 0.0f);
     }
 
+    public void GetKey(){
+        playerData.hasKey = true;
+    }
+
     #endregion
 
     #region CheckFunction
@@ -105,6 +109,10 @@ public class Player : MonoBehaviour
     public bool CheckInGround()
     {
         return Physics2D.OverlapBox(GroundCheck.transform.position,playerData.GroundCheckRadius,0.0f,playerData.WhatIsGround);
+    }
+
+    public bool hasKey(){
+        return playerData.hasKey;
     }
 
     #endregion

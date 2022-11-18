@@ -9,8 +9,11 @@ public class PlayerData : ScriptableObject
     public float movementVelocity = 10.0f;
     public float jumpUpModify = 0.95f;
     public float jumpVelocity = 8.0f;
+    public float DashSpeedModify = 1.5f;
     [Header("Check")]
     public LayerMask WhatIsGround;
     public Vector2 GroundCheckRadius = new Vector2(0.2f,0.6f);
     // public float 
+    [Header("Check variables")]
+    public bool hasKey = false;
 }

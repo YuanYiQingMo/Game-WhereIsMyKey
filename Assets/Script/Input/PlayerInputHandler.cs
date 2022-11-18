@@ -12,6 +12,9 @@ public class PlayerInputHandler : MonoBehaviour
     //Jump
     public bool IsJumping { get; private set; }
 
+    //Dash
+    public bool IsDashing {get; private set;}
+
     //InputTimer
     public float InputTimerSet = 0.5f;
     private float InputTimer;
@@ -33,6 +36,15 @@ public class PlayerInputHandler : MonoBehaviour
         if (context.canceled)
         {
             IsJumping = false;
+        }
+    }
+
+    public void OnDashInput(InputAction.CallbackContext context){
+        if(context.started){
+            IsDashing = true;
+        }
+        if(context.canceled){
+            IsDashing = false;
         }
     }
 

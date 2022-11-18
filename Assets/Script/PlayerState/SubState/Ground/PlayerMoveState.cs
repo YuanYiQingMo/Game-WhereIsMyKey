@@ -35,9 +35,18 @@ public class PlayerMoveState : PlayerGroundState
         base.PhysicUpdate();
     }
 
-    private void Move(){
-        player.SetVelocityX(playerData.movementVelocity * Xinput);
-        if(Xinput == 0){
+    private void Move()
+    {
+        if (IsDashing)
+        {
+            player.SetVelocityX(playerData.movementVelocity * playerData.DashSpeedModify * Xinput);
+        }
+        else
+        {
+            player.SetVelocityX(playerData.movementVelocity * Xinput);
+        }
+        if (Xinput == 0)
+        {
             stateMachine.ChangeState(player.IdleState);
         }
     }
